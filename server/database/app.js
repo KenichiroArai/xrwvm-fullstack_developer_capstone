@@ -48,19 +48,27 @@ app.get('/fetchReviews', async (req, res) => {
 
 // Express route to fetch reviews by a particular dealer
 app.get('/fetchReviews/dealer/:id', async (req, res) => {
-  try {
-    const documents = await Reviews.find({dealership: req.params.id});
-    res.json(documents);
-  } catch (error) {
-    res.status(500).json({ error: 'Error fetching documents' });
-  }
+
+    // TODO 2024/11/28 デバッグ出力
+    console.log('app.js:', '/fetchReviews/dealer/:id');
+
+    try {
+        const documents = await Reviews.find({dealership: req.params.id});
+
+        // TODO 2024/11/28 デバッグ出力
+        console.log('app.js:', '/fetchReviews/dealer/:id', documents);
+
+        res.json(documents);
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching documents' });
+    }
 });
 
 // Express route to fetch all dealerships
 app.get('/fetchDealers', async (req, res) => {
 
     // TODO 2024/11/28 デバッグ出力
-    console.log('/fetchDealers');
+    console.log('app.js:', '/fetchDealers');
 
     try {
         const dealers = await Dealerships.find();
