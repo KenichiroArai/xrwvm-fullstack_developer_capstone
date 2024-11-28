@@ -17,26 +17,45 @@ const Dealer = () => {
   const [postReview, setPostReview] = useState(<></>)
 
   let curr_url = window.location.href;
-  let root_url = curr_url.substring(0,curr_url.indexOf("dealer"));
+  let root_url = curr_url.substring(0, curr_url.indexOf("dealer"));
   let params = useParams();
   let id =params.id;
-  let dealer_url = root_url+`djangoapp/dealer/${id}`;
-  let reviews_url = root_url+`djangoapp/reviews/dealer/${id}`;
-  let post_review = root_url+`postreview/${id}`;
+  let dealer_url = root_url + `djangoapp/dealer/${id}`;
+  let reviews_url = root_url + `djangoapp/reviews/dealer/${id}`;
+  let post_review = root_url + `postreview/${id}`;
   
   const get_dealer = async ()=>{
+
+    // TODO 2024/11/28 デバッグ出力
+    console.log('Dealer.jsx:', 'get_dealer', dealer_url);
+
     const res = await fetch(dealer_url, {
       method: "GET"
     });
     const retobj = await res.json();
+
+    // TODO 2024/11/28 デバッグ出力
+    console.log('Dealer.jsx:', 'get_dealer', 'retobj', retobj);
     
     if(retobj.status === 200) {
-      let dealerobjs = Array.from(retobj.dealer)
+        //  2024/11/28 変更
+        //   let dealerobjs = Array.from(retobj.dealer);
+        let dealerobjs = [retobj.dealer];
+
+      // TODO 2024/11/28 デバッグ出力
+      console.log('Dealer.jsx:', 'get_dealer', 'retobj.dealer', retobj.dealer);
+      console.log('Dealer.jsx:', 'get_dealer', 'dealerobjs', dealerobjs);
+      console.log('Dealer.jsx:', 'get_dealer', 'dealerobjs[0]', dealerobjs[0]);
+
       setDealer(dealerobjs[0])
     }
   }
 
   const get_reviews = async ()=>{
+
+    // TODO 2024/11/28 デバッグ出力
+    console.log('Dealer.jsx:', 'get_reviews', reviews_url);
+
     const res = await fetch(reviews_url, {
       method: "GET"
     });
@@ -67,27 +86,27 @@ const Dealer = () => {
   },[]);  
 
 
-return(
-  <div style={{margin:"20px"}}>
-      <Header/>
-      <div style={{marginTop:"10px"}}>
-      <h1 style={{color:"grey"}}>{dealer.full_name}{postReview}</h1>
-      <h4  style={{color:"grey"}}>{dealer['city']},{dealer['address']}, Zip - {dealer['zip']}, {dealer['state']} </h4>
-      </div>
-      <div class="reviews_panel">
-      {reviews.length === 0 && unreviewed === false ? (
-        <text>Loading Reviews....</text>
-      ):  unreviewed === true? <div>No reviews yet! </div> :
-      reviews.map(review => (
-        <div className='review_panel'>
-          <img src={senti_icon(review.sentiment)} className="emotion_icon" alt='Sentiment'/>
-          <div className='review'>{review.review}</div>
-          <div className="reviewer">{review.name} {review.car_make} {review.car_model} {review.car_year}</div>
+    return (
+        <div style={{margin:"20px"}}>
+            <Header/>
+            <div style={{marginTop:"10px"}}>
+                <h1 style={{color:"grey"}}>{dealer.full_name}{postReview}</h1>
+                <h4 style={{color:"grey"}}>{dealer['city']},{dealer['address']}, Zip - {dealer['zip']}, {dealer['state']} </h4>
+            </div>
+            <div class="reviews_panel">
+            {reviews.length === 0 && unreviewed === false ? (
+                <text>Loading Reviews....</text>
+            ):  unreviewed === true? <div>No reviews yet! </div> :
+            reviews.map(review => (
+            <div className='review_panel'>
+                <img src={senti_icon(review.sentiment)} className="emotion_icon" alt='Sentiment'/>
+                <div className='review'>{review.review}</div>
+                <div className="reviewer">{review.name} {review.car_make} {review.car_model} {review.car_year}</div>
+            </div>
+            ))}
+            </div>  
         </div>
-      ))}
-    </div>  
-  </div>
-)
+    )
 }
 
 export default Dealer

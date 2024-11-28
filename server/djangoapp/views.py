@@ -125,15 +125,29 @@ def get_dealer_reviews(request, dealer_id):
         # TODO 2024/11/28 デバッグ出力
         print('views.py:get_dealer_reviews', 'endpoint', endpoint)
 
-        reviews = get_request(endpoint)
+        try:
+            reviews = get_request(endpoint)
 
-        # TODO 2024/11/28 デバッグ出力
-        print('views.py:get_dealer_reviews', 'reviews', reviews)
+            # TODO 2024/11/28 デバッグ出力
+            print('views.py:get_dealer_reviews', 'reviews', reviews)
 
-        for review_detail in reviews:
-            response = analyze_review_sentiments(review_detail['review'])
-            print(response)
-            review_detail['sentiment'] = response['sentiment']
+            for review_detail in reviews:
+                response = analyze_review_sentiments(review_detail['review'])
+
+                # TODO 2024/11/28 デバッグ出力
+                print('views.py:get_dealer_reviews', 'response', response)
+
+                print(response)
+                review_detail['sentiment'] = response['sentiment']
+
+                # TODO 2024/11/28 デバッグ出力
+                print('views.py:get_dealer_reviews', 'review_detail', review_detail)
+            return JsonResponse({"status": 200, "reviews": reviews})
+
+        except Exception as e:
+            print('views.py:get_dealer_reviews', 'error', str(e))
+            return JsonResponse({"status": 500, "message": "Internal Server Error"})
+
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
 

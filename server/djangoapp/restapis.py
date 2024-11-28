@@ -38,10 +38,22 @@ def get_request(endpoint, **kwargs):
 # request_url = sentiment_analyzer_url+"analyze/"+text
 # Add code for retrieving sentiments
 def analyze_review_sentiments(text):
-    request_url = sentiment_analyzer_url+"analyze/"+text
+
+    # TODO 2024/11/28 デバッグ出力
+    print('restapis.py:', 'analyze_review_sentiments', '開始', text)
+
+    request_url = sentiment_analyzer_url + "analyze/" + text
+
+    # TODO 2024/11/28 デバッグ出力
+    print('restapis.py:', 'analyze_review_sentiments', 'request_url', request_url)
+
     try:
         # Call get method of requests library with URL and parameters
         response = requests.get(request_url)
+
+        # TODO 2024/11/28 デバッグ出力
+        print('restapis.py:', 'analyze_review_sentiments', 'response', response)
+
         return response.json()
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")
