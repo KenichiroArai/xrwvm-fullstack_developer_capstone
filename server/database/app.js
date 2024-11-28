@@ -58,6 +58,10 @@ app.get('/fetchReviews/dealer/:id', async (req, res) => {
 
 // Express route to fetch all dealerships
 app.get('/fetchDealers', async (req, res) => {
+
+    // TODO 2024/11/28 デバッグ出力
+    console.log('/fetchDealers');
+
     try {
         const dealers = await Dealerships.find();
         res.json(dealers);
