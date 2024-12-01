@@ -3,6 +3,7 @@ import RegisterPanel from "./components/Register/Register"
 import DealersPanel from './components/Dealers/Dealers';
 import DealerPanel from './components/Dealers/Dealer';
 import PostReviewPanel from "./components/Dealers/PostReview"
+import SearchCarsPanel from "./components/Dealers/SearchCars";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/dealers" element={<DealersPanel />} />
         <Route path="/dealer/:id" element={<DealerPanel />} />
         <Route path="/postreview/:id" element={<PostReviewPanel />} />
+        <Route path="/searchcars/:id" element={<SearchCarsPanel />} />
     </Routes>
   );
 }
