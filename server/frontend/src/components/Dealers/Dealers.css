@@ -13,10 +13,10 @@ table{
     font-size: large;
   }
   
-  .review_panel{
+  .review_panel {
     display: flex;
     flex-direction: column;
-    border: solid grey;
+    border: solid purple;
     position: relative;
     height:7cm;
     width:6cm;
@@ -79,10 +79,10 @@ table{
 }
 
 .review_icon {
-  width:40px;
+    width: 40px;
 }
 
 .review_icon:hover {
-  transform: scale(1.1);
-  border: solid lightgray;
+    transform: scale(1.1);
+    border: 2px solid #080808;
 }
